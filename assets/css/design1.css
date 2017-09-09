@@ -1,0 +1,4 @@
+// design1.css
+.container { width: 1000px; }
+.header, .footer {background-color: #ddd; }
+.contents {min-height: 500px; }
