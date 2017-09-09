@@ -48,7 +48,12 @@
       <select class="form-control" id="coure" name="course" >
         <option value="BSIT">BSIT</option>
         <option value="BSIS">BSIS</option>
-        <option value="BSCS">BSCS</option>
+        <option value="BSCS">BSCS</option> -->
+        <!-- <?php
+    			foreach($students as $s)
+    			{
+    				<option value="$s['idno']">$s['idno']</option>
+        ?>  -->
       </select>
 
       <label for="sex">Sex:</label>

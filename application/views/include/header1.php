@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?php echo base_url('bootstrap/css/bootstrap.css');  ?>" />
     <link rel="stylesheet" href="<?php echo base_url('bootstrap/css/bootstrap-theme.css');  ?>" />
     <link rel="stylesheet" href="<?php echo base_url('bootstrap/css/custom.css');  ?>" />
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/design1.css');  ?>" />
+    <link rel="stylesheet" href="<?php echo base_url('assets/css/design.css');  ?>" />
 
     <script src= "<?php echo base_url('bootstrap/js/jquery.min.js') ?>"></script>
     <script src= "<?php echo base_url('bootstrap/js/bootstrap.min.js') ?>"></script>
