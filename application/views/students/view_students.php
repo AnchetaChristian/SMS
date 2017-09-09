@@ -19,7 +19,7 @@
 <div id="new_student">
 <!-- 	<a class="button" href="../mvc/students.php?request=add">New Student</a>
  -->
- 	                  <?php echo '<button type="button" class="btn btn-warning"><a href='.base_url('students/new_student').'>Add Student</a></button>';
+ 	                  <?php echo '<button type="button" class="btn btn-warning"><a href='.base_url('boots/new_student').'>Add Student</a></button>';
 
  	                  ?>
 
@@ -55,9 +55,9 @@
               <td>'.$a['course'].'</td>
                 <td>
 
-                  <button type="button" class="btn btn-warning"><a href='.base_url('students/profile/'.$a['idno']).'>View</a></button>
-                  <button type="button" class="btn btn-success"><a href='.base_url('students/edit_student/'.$a['idno']).'>Edit</a></button>
-                  <button type="button" class="btn btn-danger"><a href='.base_url('students/drop/'.$a['idno']).'>Delete</a></button>
+                  <button type="button" class="btn btn-warning"><a href='.base_url('boots/profile/'.$a['idno']).'>View</a></button>
+                  <button type="button" class="btn btn-success"><a href='.base_url('boots/edit_student/'.$a['idno']).'>Edit</a></button>
+                  <button type="button" class="btn btn-danger"><a href='.base_url('boots/drop/'.$a['idno']).'>Delete</a></button>
                 </td>
             </tr>
           ';
