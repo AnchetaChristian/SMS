@@ -5,7 +5,7 @@ class boots extends CI_Controller { //parent object is CI_Controller
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('student_model','students');
+		$this->load->model('students_model','students');
 	}
 	public function index()
 	{
@@ -144,12 +144,15 @@ class boots extends CI_Controller { //parent object is CI_Controller
 		}
 
 		}
+
 		public function drop($id){
 		$student = $this->students->delete_students(array('idno'=>$id));
 		$header_data['title'] = "Delete Student";
 		$data['student']=$student;
-			$this->load->view('students/profile',$data);
+		//	$this->load->view('students/profile',$data);
 			$this->load->view('include/header1',$header_data);
+			$this->load->view('include/view_students',$header_data);
+
 
 	}
 	public function edit_student($id){
