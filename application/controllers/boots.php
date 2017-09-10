@@ -5,24 +5,28 @@ class boots extends CI_Controller { //parent object is CI_Controller
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('student_model','students');
+		$this->load->model('students_model','students');
+		$this->load->model('courses_model','crs');
 	}
 	public function index()
 	{
 		$students= array();
-		//$dummy = array('idno'=>'15-037-075','last name'=>'Ancheta','first name'=>'Christian Daniel','middle name'=>'Mozo','course'=>'BSIT','sex'=>'M');
-		//$students[]=$dummy;
+		$courses= array();
 		$condition = null;
-		//$condition = array('sex'=>'male');//,'course'=>'BSIT');
 		$rs = $this->students->read($condition); //laman  ng record nasa rs na
-		//print_r($rs);
-		//exit;
 		foreach ($rs as $r) {
 			$info = array('idno'=>$r['idno'],
 						'lastname'=>$r['lname']);
 			$students[]=$info;
 		}
+		$rrs = $this->crs->read_crs($condition); //laman  ng record nasa rs na
+		foreach ($rrs as $s) {
+			$info = array('crs_code'=>$s['crs_code'],
+						'crs_desc'=>$s['crs_desc']);
+			$courses[]=$info;
+		}
 		$data['students'] = $students;
+		$data['crs'] = $courses;
 		$header_data['title'] = "SMS Dashboard";
 		$this->load->view('include/header1',$header_data);
 		$this->load->view('students/dashboard',$data);
@@ -30,12 +34,7 @@ class boots extends CI_Controller { //parent object is CI_Controller
 	}
 	public function list_students() //The firstmethod to be always called is the constractor if its declared if not its the index
 	{
-		//echo "My first CI Controller";
-		//$this->load->view('welcome_message');
-		//$fruits = array('banana','apple','tomato','etc');
-		//$data['fruits']= $fruits;
 		$header_data['title']="The title of the page";
-		//$this->load->view('hello',$data);
 		if(isset($_GET['submit'])){
 					$condition[0]=array('idno'=>$_GET['search']);
 					$condition[1]=array('lname'=>$_GET['search']);
@@ -67,7 +66,6 @@ class boots extends CI_Controller { //parent object is CI_Controller
 						$this->load->view('include/footer1');
 					}
 		else {
-		//Passing dummy  data
 		$students= array();
 		//$dummy = array('idno'=>'15-037-075','last name'=>'Ancheta','first name'=>'Christian Daniel','middle name'=>'Mozo','course'=>'BSIT','sex'=>'M');
 		//$students[]=$dummy;
@@ -93,55 +91,118 @@ class boots extends CI_Controller { //parent object is CI_Controller
 		//call the model
 		}
 	}
-	// public function index(){
-	// 	//echo "CI And Bootstrap";
-	// 	$header_data['title'] = "Star na si Van Damme Stallone";
-	// 	$data['name'] = "Kiko";
-	// 	$data['years'] = "35";
-	// 	$this->load->view('include/header1', $header_data);
-	// 	$this->load->view('students/contents', $data);
-	// 	$this->load->view('include/footer1');
-	// }
-	public function profile($id){  //is $id=null means id is optional
-		//echo "Displays students profile with id = $id";
-		//load the model.
-		//find the student resourcebundle_get_error_code
-		//load the view
-//		$data['idno'];
+	public function profile($id){
 	$student = $this->students->read(array('idno'=>$id));
-//if (count($student) >0)
-//{
-
 	$header_data['title'] = "Student view";
 	$data['student']=$student;
 			$this->load->view('students/profile',$data);
 			$this->load->view('include/header1',$header_data);
-		//,$header_data);
-
-//	}
-//else{
-	//redirect('students','refresh');
-//}
 	}
 
+
 	public function new_student(){
-		if ($_SERVER['REQUEST_METHOD']=='POST'){
-			//save new student
-			// do some stuff
+		$header_data['title'] = "New Student";
+		$option = $this->crs->read_crs();
 
-			print_r($_POST);
-			// $validate = array(
-			// 	array('field'=>'idno','label'=>'ID NO','rules'=>'trim[required]')
+		foreach ($option as $a) {
+			// $info = array('crs_desc'=>$a['crs_desc']);
+			$info =array( '<option value = "'.$a['crs_desc'].'">'.$a['crs_desc'].'</option>');
+			$courses[]=$info;
 		}
-		else { //display blank form
-			$header_data['title'] = "Add New Student";
-			$data = array();
+		//print_r($courses); 
+		$data['crs'] = $courses;
+		$this->load->view('students/new_student',$data);
+		$this->load->view('include/header',$header_data);
+		if(isset($_POST['submit'])){
+			$student=array('idno'=>$_POST['idno'],'lname'=>$_POST['lname'],'fname'=>$_POST['fname'],'mname'=>$_POST['mname'],
+				'sex'=>$_POST['sex'],'course'=>$_POST['course']);
+	//		print_r($data);
+			$this->students->create($student);
 
-			$this->load->view('include/header1', $header_data);
-			$this->load->view('students/new_student', $data);
-			$this->load->view('include/footer1');
+		$students= array();
+			//$record=array();
+			$data2['title']="The title of the page";
+			$condition = array('idno'=>$_POST['idno']);
+			$rs = $this->students->read($condition); //laman  ng record nasa rs na
+			foreach ($rs as $r) {
+				$info = array('idno'=>$r['idno'],
+							'lastname'=>$r['lname'],
+							'firstname'=>$r['fname'],
+							'middlename'=>$r['mname'],
+							'sex'=>$r['sex'],
+							'course'=>$r['course']);
+				$students[]=$info;
+			}
+			$data['students'] = $students;
+			$this->load->view('students/view_students',$data);
+			$this->load->view('include/header',$data2);//,$header_data);
+			//$data['student']=$rs;
 		}
+	}
 
+
+	public function edit_student($id){
+	$student = $this->students->read(array('idno'=>$id));
+	$header_data['title'] = "Edit Student";
+	$data['student']=$student;
+			$this->load->view('students/edit_student',$data);
+			$this->load->view('include/header1',$header_data);
+		if(isset($_POST['submit'])){
+			$student=array('idno'=>$id,'lname'=>$_POST['lname'],'fname'=>$_POST['fname'],'mname'=>$_POST['mname'],
+				'sex'=>$_POST['sex'],'course'=>$_POST['course']);
+			$this->students->update($id, $student);
 		}
+	}
+	public function drop($id){
+		$student = $this->students->delete_students(array('idno'=>$id));
+		$header_data['title'] = "Delete Student";
+		$data['student']=$student;
+			$this->load->view('students/profile',$data);
+			$this->load->view('include/header1',$header_data);
+
+	}
+	//courses
+	public function list_courses() //The firstmethod to be always called is the constractor if its declared if not its the index
+	{
+		$header_data['title']="SMS Courses";
+		$courses= array();
+		$condition = null;
+		$rrs = $this->crs->read_crs($condition); //laman  ng record nasa rs na
+		foreach ($rrs as $s) {
+			$info = array('crs_code'=>$s['crs_code'],
+						'crs_desc'=>$s['crs_desc']);
+			$courses[]=$info;
+		}
+		$data['crs'] = $courses;
+		$this->load->view('include/header1',$header_data);
+		$this->load->view('students/courses',$data);
+		$this->load->view('include/footer1');
+
+}
+public function new_course(){
+	$header_data['title'] = "New Course";
+	$this->load->view('students/new_course');
+	$this->load->view('include/header',$header_data);
+	if(isset($_POST['submit'])){
+		$course=array('crs_code'=>$_POST['crs_code'],'crs_desc'=>$_POST['crs_desc']);
+//		print_r($data);
+		$this->crs->create($course);
+
+	$students= array();
+		//$record=array();
+		$courses = array();
+		$data2['title']="The title of the page";
+		$rss = $this->crs->read_crs(); //laman  ng record nasa rs na
+		foreach ($rss as $s) {
+			$info = array('crs_code'=>$s['crs_code'],
+						'crs_desc'=>$s['crs_desc']);
+			$courses[]=$info;
+		}
+		$data['crs'] = $courses;
+		$this->load->view('students/courses',$data);
+		$this->load->view('include/header',$data2);//,$header_data);
+		//$data['student']=$rs;
+	}
+}
 }
 ?>

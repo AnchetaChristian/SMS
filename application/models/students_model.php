@@ -31,7 +31,7 @@
         $query=$this->db->get();
         return $query->result_array();
       }
-      public function update($id, $student) {         
+      public function update($id, $student) {
         $this->db->where("idno",$id);
         $this->db->update("sms", $student);
      //   $query=$this->db->get();
@@ -49,6 +49,8 @@
         //$query=$this->db->get();
         //return $query->result_array();
       }
+      //courses  public function read($condition=null) {
+
   }
 
  ?>

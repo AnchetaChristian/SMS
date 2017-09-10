@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title><?php echo $title; ?></title>
+
 </head>
 <body>
   <div class="container-fluid">
@@ -16,21 +16,11 @@
         <div class="col-md-8 col-xs-8 col-sm-8">
 
 <table border = "1">
-  <!-- <thead>
-    <tr>
-        <th>ID NO</th>
-        <th>LAST NAME</th>
-        <th>FIRST NAME</th>
-        <th>MIDDLE NAME</th>
-        <th>SEX</th>
-        <th>COURSE</th>
-    </tr>
-  </thead> -->
   <tbody>
   </tbody><form role="form" class="" method="POST">
     <div class="form-group">
       <label for="idno">ID NO.:</label>
-      <input type="text" class="form-control" placeholder="<?php echo $student[0]['lname']; ?>"  id="idno" name="idno" />
+      <input type="text" class="form-control" placeholder="<?php echo $student[0]['idno']; ?>"  id="idno" name="idno" />
     </div>
     <div class="form-group">
       <label for="lname">Last Name:</label>
@@ -56,7 +46,7 @@
       <input type="radio" class="form-group" id="sex" name="sex" value="Female">Female</input>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" name="submit">
           Save <span class="glyphicon glyphicon-save"></span>
         </button>
       </div>

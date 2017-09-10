@@ -49,6 +49,7 @@
         <option value="BSIT">BSIT</option>
         <option value="BSIS">BSIS</option>
         <option value="BSCS">BSCS</option>
+        
       </select>
 
       <label for="sex">Sex:</label>
@@ -56,7 +57,7 @@
       <input type="radio" class="form-group" id="sex" name="sex" value="Female">Female</input>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" name="submit">
           Save <span class="glyphicon glyphicon-save"></span>
         </button>
       </div>
